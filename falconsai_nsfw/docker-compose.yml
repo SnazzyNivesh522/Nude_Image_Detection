@@ -1,0 +1,36 @@
+services:
+  nsfwpy-cpu:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nsfwpy:cpu
+    ports:
+      - "5000:5000"
+    environment:
+      MODEL_NAME: "Falconsai/nsfw_image_detection"
+      USE_GPU: "${USE_GPU:-false}"
+      MAX_CONTENT_LENGTH_MB: "10"
+      LOG_LEVEL: "INFO"
+      LOG_JSON: "true"
+    restart: unless-stopped
+  nsfwpy-gpu:
+    build:
+      context: .
+      dockerfile: Dockerfile.gpu
+    image: nsfwpy:gpu
+    ports:
+      - "5001:5000"
+    environment:
+      MODEL_NAME: "Falconsai/nsfw_image_detection"
+      USE_GPU: "${USE_GPU:-true}"
+      MAX_CONTENT_LENGTH_MB: "10"
+      LOG_LEVEL: "INFO"
+      LOG_JSON: "true"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
