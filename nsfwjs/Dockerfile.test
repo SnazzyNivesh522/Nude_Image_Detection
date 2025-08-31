@@ -1,0 +1,35 @@
+# Stage 1: Build dependencies and install packages
+FROM nvidia/cuda:12.1.0-devel-ubuntu22.04 AS builder
+
+# Install Node.js
+RUN apt-get update && apt-get install -y curl
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+RUN apt-get install -y nodejs
+
+# Set working directory
+WORKDIR /usr/src/app
+
+# Copy package files and install dependencies
+COPY package.json package-lock.json ./
+RUN npm install
+
+# Stage 2: Create final, minimal runtime image
+FROM nvidia/cuda:12.1.0-runtime-ubuntu22.04
+
+# Install Node.js
+RUN apt-get update && apt-get install -y curl
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+RUN apt-get install -y nodejs
+
+# Set working directory
+WORKDIR /usr/src/app
+
+# Copy dependencies and application code from the builder stage
+COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY . .
+
+# Expose the application port
+EXPOSE 3000
+
+# Start the application
+CMD [ "npm", "start" ]

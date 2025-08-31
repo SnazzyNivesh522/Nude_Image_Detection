@@ -1,0 +1,16 @@
+# FROM nvidia/cuda:12.1.0-devel-ubuntu22.04
+FROM tensorflow/tensorflow:latest-gpu
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+RUN apt-get install -y nodejs
+
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
+COPY . .
+
+EXPOSE 3000
+CMD [ "npm", "start" ]

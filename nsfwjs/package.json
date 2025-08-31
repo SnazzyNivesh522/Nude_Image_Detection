@@ -1,0 +1,24 @@
+{
+  "name": "nsfwjs",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "start": "NODE_ENV=production node app.js",
+    "start:dev": "NODE_ENV=development node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^4.22.0",
+    "@tensorflow/tfjs-node-gpu": "^4.22.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "nsfwjs": "^4.2.1",
+    "sharp": "^0.34.3",
+    "winston": "^3.17.0"
+  }
+}

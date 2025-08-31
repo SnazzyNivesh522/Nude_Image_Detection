@@ -1,0 +1,31 @@
+services:
+  nsfwjs-cpu:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nsfwjs:cpu
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - MODEL_MODE=cpu
+    restart: unless-stopped
+  nsfwjs-gpu:
+    build:
+      context: .
+      dockerfile: Dockerfile.gpu
+    image: nsfwjs:gpu
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+      - MODEL_MODE=gpu
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    # runtime: nvidia #required for older versions of docker <19.03
+    restart: unless-stopped
