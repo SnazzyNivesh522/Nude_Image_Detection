@@ -27,3 +27,4 @@ htmlcov/
 .mypy_cache/
 .pyre/
 .pytype/    
+models/
