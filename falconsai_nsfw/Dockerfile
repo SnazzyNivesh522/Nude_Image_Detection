@@ -15,6 +15,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app ./app
 COPY gunicorn.conf.py .
+COPY wsgi.py .
 
 # Non-root (optional hardening)
 RUN useradd -m svcuser
@@ -23,4 +24,5 @@ USER svcuser
 EXPOSE 8000
 ENV USE_GPU=false
 
-CMD ["gunicorn", "-c", "gunicorn.conf.py", "app:create_app()"]
+# Use the new wsgi.py file as the Gunicorn entry point
+CMD ["gunicorn", "-c", "gunicorn.conf.py", "wsgi:app"]

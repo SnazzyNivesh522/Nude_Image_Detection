@@ -12,7 +12,7 @@ def create_app() -> Flask:
     app.register_blueprint(api_bp)
 
     # Readiness/health lightweight endpoints
-    @app.get("/healthz")
+    @app.get("/health")
     def healthz():
         return {"status": "ok"}
 

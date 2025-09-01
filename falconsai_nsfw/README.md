@@ -129,7 +129,7 @@ curl -X POST http://localhost:5000/classify/binary \
 2. Run locally:
 
    ```bash
-   gunicorn -c gunicorn.conf.py app:create_app()
+   gunicorn -c gunicorn.conf.py wsgi:app
    ```
 
    API will be available at: `http://localhost:8000`

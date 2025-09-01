@@ -13,7 +13,7 @@ services:
   nsfwjs-gpu:
     build:
       context: .
-      dockerfile: Dockerfile.gpu
+      dockerfile: Dockerfile.test
     image: nsfwjs:gpu
     ports:
       - "3001:3000"
