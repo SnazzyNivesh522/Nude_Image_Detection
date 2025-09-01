@@ -28,3 +28,5 @@ htmlcov/
 .pyre/
 .pytype/    
 models/
+nsfw_dataset_v1.zip
+nsfw_dataset_v1/
